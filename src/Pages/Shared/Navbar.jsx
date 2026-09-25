@@ -23,7 +23,7 @@ const Navbar = ({ user }) => {
   ];
 
   return (
-    <header className="sticky top-0 z-50 border-b border-green-100 bg-white/95 shadow-sm backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-green-100 bg-white shadow-sm backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* ================= NAVBAR ================= */}
@@ -47,7 +47,7 @@ const Navbar = ({ user }) => {
                 className="text-lg font-bold text-green-800
                 sm:text-xl lg:text-2xl"
               >
-                Agri<span className="text-lime-600">Care</span>
+                Agro<span className="text-lime-600">Mela</span>
               </h1>
 
               <p
