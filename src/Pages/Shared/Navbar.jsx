@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  use, useState } from "react";
 import { Link, NavLink } from "react-router";
 import {
   Menu,
@@ -8,10 +8,15 @@ import {
   Sprout,
   ChevronDown,
 } from "lucide-react";
+import { AuthContext } from "../../Context/AuthProvider";
 
-const Navbar = ({ user }) => {
+const Navbar = ({user}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const {email} = use(AuthContext);
+  console.log(email);
+  
+
 
   const navLinks = [
     { name: "Home", path: "/" },
