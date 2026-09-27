@@ -1,12 +1,13 @@
 import { Lottie } from "lottie-react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 // import Swal from "sweetalert2";
 import useAuth from "../Hooks/UseAuth";
-
 import loginAnimation from "../assets/lotties/Login (1).json";
 
 const Login = () => {
     const { loginUser, googleLogin } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -18,18 +19,19 @@ const Login = () => {
         loginUser(email, password)
             .then((res) => {
                 console.log(res.user);
+                navigate(`${location.state ? location.state : "/"}`);
             })
             .catch((error) => console.log(error));
     };
 
     const handleGoogleLogin = () => {
-    googleLogin()
-    .then(result=>{
-      console.log(result.user);
-    })
-    .catch(error=>console.log(error))
+        googleLogin()
+            .then((result) => {
+                console.log(result.user);
+                navigate(`${location.state?location.state:"/"}`);
+            })
+            .catch((error) => console.log(error));
     };
-
 
     return (
         <div className="min-h-screen bg-green-50 px-4 py-10 sm:px-6 lg:px-8">
@@ -176,7 +178,7 @@ const Login = () => {
                                     alt="Google"
                                     className="h-5 w-5"
                                 />
-                                Continue with Google 
+                                Continue with Google
                             </button>
 
                             {/* ================= REGISTER ================= */}

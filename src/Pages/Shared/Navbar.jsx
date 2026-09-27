@@ -180,15 +180,6 @@ const Navbar = () => {
                         ) : (
                             <>
                                 <Link
-                                    to="/login"
-                                    className="rounded-full px-4 py-2 text-sm
-                  font-semibold text-green-700
-                  hover:bg-green-50 xl:px-5"
-                                >
-                                    Login
-                                </Link>
-
-                                <Link
                                     to="/register"
                                     className="rounded-full bg-green-700 px-4 py-2
                   text-sm font-semibold text-white shadow-md

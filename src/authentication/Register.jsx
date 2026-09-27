@@ -1,6 +1,6 @@
 import { Lottie } from "lottie-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import registerAnimation from "../assets/lotties/Register (2).json";
 import useAuth from "../Hooks/UseAuth";
 import { Eye, EyeOff, Phone } from "lucide-react";
@@ -8,6 +8,8 @@ import { Eye, EyeOff, Phone } from "lucide-react";
 const Register = () => {
     const { createUser,updateUserProfile } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
+    // const location = useLocation()
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -29,6 +31,7 @@ const Register = () => {
         createUser(email, password)
             .then((result) => {
                 console.log(result.user);
+                navigate('/')
                 updateUserProfile(name, photo)
             })
             .catch((error) => console.log(error));
