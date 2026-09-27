@@ -22,12 +22,14 @@ const Login = () => {
             .catch((error) => console.log(error));
     };
 
-    const handleGoogleLogin = () => {};
+    const handleGoogleLogin = () => {
     googleLogin()
     .then(result=>{
-      console.log(result);
+      console.log(result.user);
     })
     .catch(error=>console.log(error))
+    };
+
 
     return (
         <div className="min-h-screen bg-green-50 px-4 py-10 sm:px-6 lg:px-8">
@@ -174,7 +176,7 @@ const Login = () => {
                                     alt="Google"
                                     className="h-5 w-5"
                                 />
-                                Continue with Google
+                                Continue with Google 
                             </button>
 
                             {/* ================= REGISTER ================= */}

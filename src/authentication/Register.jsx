@@ -3,22 +3,24 @@ import { useState } from "react";
 import { Link } from "react-router";
 import registerAnimation from "../assets/lotties/Register (2).json";
 import useAuth from "../Hooks/UseAuth";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Phone } from "lucide-react";
 
 const Register = () => {
-    const { createUser } = useAuth();
+    const { createUser,updateUserProfile } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
 
     const handleRegister = (e) => {
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
+        const photo = form.photo.value;
         const email = form.email.value;
         const password = form.password.value;
         const role = form.role.value;
 
         const userData = {
             name,
+            photo,
             email,
             password,
             role,
@@ -27,13 +29,13 @@ const Register = () => {
         createUser(email, password)
             .then((result) => {
                 console.log(result.user);
-                
+                updateUserProfile(name, photo)
             })
             .catch((error) => console.log(error));
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 flex items-center justify-center px-4 py-10">
+        <div className="min-h-screen from-green-50 via-white to-emerald-50 flex items-center justify-center px-4 py-10">
             <div className="w-full max-w-6xl bg-white rounded-3xl shadow-xl overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                     {/* ================= LEFT SIDE ================= */}
@@ -93,6 +95,20 @@ const Register = () => {
                                     type="text"
                                     name="name"
                                     placeholder="Enter your full name"
+                                    required
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100 transition"
+                                />
+                            </div>
+                            {/* Name */}
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                   Photo Url
+                                </label>
+
+                                <input
+                                    type="url"
+                                    name="photo"
+                                    placeholder="Enter your photo url"
                                     required
                                     className="w-full px-4 py-3 rounded-xl border border-gray-300 outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100 transition"
                                 />
