@@ -1,15 +1,17 @@
 import { Lottie } from "lottie-react";
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 import registerAnimation from "../assets/lotties/Register (2).json";
 import useAuth from "../Hooks/UseAuth";
-import { Eye, EyeOff, Phone } from "lucide-react";
 
 const Register = () => {
-    const { createUser,updateUserProfile } = useAuth();
+    const { createUser, updateUserProfile, user } = useAuth();
+    // console.log(user.displayName);
+    
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    // const location = useLocation()
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -31,8 +33,18 @@ const Register = () => {
         createUser(email, password)
             .then((result) => {
                 console.log(result.user);
-                navigate('/')
-                updateUserProfile(name, photo)
+                toast.success(`Account created! Welcome to the family,${user?.displayName}`, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+                navigate("/");
+                updateUserProfile(name, photo);
             })
             .catch((error) => console.log(error));
     };
@@ -105,7 +117,7 @@ const Register = () => {
                             {/* Name */}
                             <div>
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                   Photo Url
+                                    Photo Url
                                 </label>
 
                                 <input
@@ -157,7 +169,7 @@ const Register = () => {
                                         }
                                         className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-green-600 hover:text-green-700"
                                     >
-                                        {showPassword ?  <Eye />: <EyeOff />}
+                                        {showPassword ? <Eye /> : <EyeOff />}
                                     </button>
                                 </div>
                             </div>
