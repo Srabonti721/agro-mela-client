@@ -1,2 +1,20 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+.service-swiper .swiper-pagination {
+  bottom: 0;
+}
+
+.service-swiper .swiper-pagination-bullet {
+  width: 9px;
+  height: 9px;
+  background: #bbf7d0;
+  opacity: 1;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.service-swiper .swiper-pagination-bullet-active {
+  width: 30px;
+  border-radius: 9999px;
+  background: #16a34a;
+}
