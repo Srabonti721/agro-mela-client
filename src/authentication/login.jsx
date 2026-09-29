@@ -1,6 +1,5 @@
 import { Lottie } from "lottie-react";
 import { Link, useLocation, useNavigate } from "react-router";
-// import Swal from "sweetalert2";
 import useAuth from "../Hooks/UseAuth";
 import loginAnimation from "../assets/lotties/Login (1).json";
 
@@ -72,7 +71,7 @@ const Login = () => {
 
                                 <h1 className="mt-3 text-2xl font-bold text-green-800">
                                     Agri
-                                    <span className="text-lime-600">Care</span>
+                                    <span className="text-lime-600">Mela</span>
                                 </h1>
                             </div>
 

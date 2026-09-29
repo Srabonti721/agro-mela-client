@@ -8,7 +8,6 @@ import useAuth from "../Hooks/UseAuth";
 
 const Register = () => {
     const { createUser, updateUserProfile, user } = useAuth();
-    // console.log(user.displayName);
     
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
@@ -172,29 +171,6 @@ const Register = () => {
                                         {showPassword ? <Eye /> : <EyeOff />}
                                     </button>
                                 </div>
-                            </div>
-
-                            {/* Role */}
-                            <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                    Select Role
-                                </label>
-
-                                <select
-                                    name="role"
-                                    required
-                                    defaultValue=""
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white outline-none focus:border-green-500 focus:ring-2 focus:ring-green-100 transition"
-                                >
-                                    <option value="" disabled>
-                                        Select your role
-                                    </option>
-
-                                    <option value="farmer">Farmer</option>
-
-                                    <option value="buyer">Buyer</option>
-                                    <option value="buyer">Admin</option>
-                                </select>
                             </div>
 
                             {/* Terms */}

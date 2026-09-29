@@ -1,77 +1,62 @@
-import { ChevronDown, Menu, Search, Sprout, UserRound, X } from "lucide-react";
+import { Leaf, LogIn, Menu, UserRound, X } from "lucide-react";
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import useAuth from "../../Hooks/UseAuth";
 
 const Navbar = () => {
-    const { user, logOutUser } = useAuth();
-console.log(user);
-
+    const { user } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
-    const [profileOpen, setProfileOpen] = useState(false);
-
-    const handleLogOut = () => {
-        logOutUser()
-            .then(() => {
-                alert("user logout successfully");
-            })
-            .catch((error) => console.log(error));
-    };
 
     const navLinks = [
         { name: "Home", path: "/" },
-        { name: "Products", path: "/products" },
-        { name: "Farming Guide", path: "/farming-guide" },
-        { name: "Market", path: "/market" },
-        { name: "Services", path: "/services" },
         { name: "About", path: "/about" },
+        { name: "Products", path: "/products" },
+        { name: "Services", path: "/services" },
+        { name: "Gallery", path: "/gallery" },
+        { name: "Contact", path: "/contact" },
     ];
 
+    const closeMenu = () => {
+        setIsOpen(false);
+    };
+
     return (
-        <header className="sticky top-0 z-50 border-b border-green-100 bg-white shadow-sm backdrop-blur-md">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                {/* ================= NAVBAR ================= */}
-                <div className="flex h-16 items-center justify-between sm:h-18 lg:h-20">
+        <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-green-100">
+            <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+                <div className="h-20 flex items-center justify-between">
                     {/* ================= LOGO ================= */}
-                    <Link to="/" className="flex items-center gap-2 sm:gap-3">
-                        <div
-                            className="flex h-9 w-9 items-center justify-center
-              rounded-xl bg-green-100 text-green-700
-              sm:h-10 sm:w-10 lg:h-11 lg:w-11"
-                        >
-                            <Sprout className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <Link
+                        to="/"
+                        onClick={closeMenu}
+                        className="flex items-center gap-2"
+                    >
+                        <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">
+                            <Leaf className="text-white" size={22} />
                         </div>
 
                         <div>
-                            <h1
-                                className="text-lg font-bold text-green-800
-                sm:text-xl lg:text-2xl"
-                            >
-                                Agro<span className="text-lime-600">Mela</span>
+                            <h1 className="text-xl font-bold text-gray-800 leading-none">
+                                Agro<span className="text-green-600">Mela</span>
                             </h1>
 
-                            <p
-                                className="hidden text-[9px] tracking-[0.2em]
-                text-gray-500 sm:block"
-                            >
-                                GROW • FARM • THRIVE
+                            <p className="text-[10px] text-gray-500 tracking-wider mt-1">
+                                GROWING NATURALLY
                             </p>
                         </div>
                     </Link>
 
-                    {/* ================= DESKTOP NAV ================= */}
-                    <nav className="hidden lg:flex lg:items-center lg:gap-5 xl:gap-7">
+                    {/* ================= DESKTOP MENU ================= */}
+                    <nav className="hidden lg:flex items-center gap-8">
                         {navLinks.map((link) => (
                             <NavLink
                                 key={link.path}
                                 to={link.path}
                                 className={({ isActive }) =>
-                                    `relative py-2 text-sm font-medium transition
-                  xl:text-[15px]
+                                    `relative text-sm font-medium transition duration-300
                   ${
                       isActive
-                          ? "text-green-700"
-                          : "text-gray-700 hover:text-green-700"
+                          ? "text-green-600"
+                          : "text-gray-600 hover:text-green-600"
                   }`
                                 }
                             >
@@ -79,10 +64,13 @@ console.log(user);
                                     <>
                                         {link.name}
 
+                                        {/* Active underline */}
                                         <span
-                                            className={`absolute bottom-0 left-0 h-0.5
-                      rounded-full bg-green-600 transition-all
-                      ${isActive ? "w-full" : "w-0"}`}
+                                            className={`
+                        absolute -bottom-2 left-0 h-0.5 bg-green-600
+                        transition-all duration-300
+                        ${isActive ? "w-full" : "w-0"}
+                      `}
                                         />
                                     </>
                                 )}
@@ -90,198 +78,118 @@ console.log(user);
                         ))}
                     </nav>
 
-                    {/* ================= DESKTOP RIGHT ================= */}
-                    <div className="hidden lg:flex lg:items-center lg:gap-2 xl:gap-3">
-                        {/* Search */}
-                        <button
-                            className="flex h-9 w-9 items-center justify-center
-              rounded-full text-gray-600 transition
-              hover:bg-green-50 hover:text-green-700
-              xl:h-10 xl:w-10"
-                        >
-                            <Search size={19} />
-                        </button>
-
-                        {user ? (
-                            /* ================= USER ================= */
-                            <div className="relative">
-                                <button
-                                    onClick={() => setProfileOpen(!profileOpen)}
-                                    className="flex items-center gap-2 rounded-full
-                  border border-green-100 bg-green-50 px-2 py-1.5
-                  xl:px-3 xl:py-2"
-                                >
-                                    {user.photoURL ? (
-                                        <img
-                                            src={user.photoURL}
-                                            alt="Profile"
-                                            className="h-7 w-7 rounded-full object-cover
-                      xl:h-8 xl:w-8"
-                                        />
-                                    ) : (
-                                        <UserRound size={18} />
-                                    )}
-
-                                    <span
-                                        className="hidden max-w-20 truncate text-sm
-                    font-medium text-green-800 xl:block"
-                                    >
-                                        {user.displayName || "User"}
-                                    </span>
-
-                                    <ChevronDown size={15} />
-                                </button>
-
-                                {profileOpen && (
-                                    <div
-                                        className="absolute right-0 mt-3 w-52
-                    rounded-2xl border border-green-100
-                    bg-white p-2 shadow-xl"
-                                    >
-                                        <Link
-                                            to="/profile"
-                                            className="block rounded-xl px-4 py-3 text-sm
-                      text-gray-700 hover:bg-green-50
-                      hover:text-green-700"
-                                        >
-                                            Profile
-                                        </Link>
-
-                                        <Link
-                                            to="/dashboard"
-                                            className="block rounded-xl px-4 py-3 text-sm
-                      text-gray-700 hover:bg-green-50
-                      hover:text-green-700"
-                                        >
-                                            Dashboard
-                                        </Link>
-
-                                        <Link
-                                            to="/dashboard/my-products"
-                                            className="block rounded-xl px-4 py-3 text-sm
-                      text-gray-700 hover:bg-green-50
-                      hover:text-green-700"
-                                        >
-                                            My Products
-                                        </Link>
-
-                                        <hr className="my-1 border-gray-100" />
-
-                                        <button
-                                            onClick={handleLogOut}
-                                            className="w-full rounded-xl px-4 py-3
-                      text-left text-sm text-red-500
-                      hover:bg-red-50"
-                                        >
-                                            Logout
-                                        </button>
-                                    </div>
-                                )}
+                    {/* ================= RIGHT SIDE ================= */}
+                    <div className="hidden lg:flex items-center gap-3">
+                        {/* user img */}
+                        <div className="avatar">
+                            <div className="w-10 rounded-full">
+                                <img
+                                    alt="user img"
+                                    src={`${user ? user?.photoURL : <UserRound />}`}
+                                />
                             </div>
-                        ) : (
-                            <>
-                                <Link
-                                    to="/register"
-                                    className="rounded-full bg-green-700 px-4 py-2
-                  text-sm font-semibold text-white shadow-md
-                  shadow-green-200 transition hover:bg-green-800
-                  xl:px-5"
-                                >
-                                    Get Started
-                                </Link>
-                            </>
-                        )}
+                        </div>
+                        <Link
+                            to="/login"
+                            className="
+                flex items-center gap-2
+                px-5 py-2.5
+                rounded-lg
+                border border-green-600
+                text-green-600
+                font-semibold text-sm
+                hover:bg-green-600
+                hover:text-white
+                transition duration-300
+              "
+                        >
+                            <LogIn size={17} />
+                            Login
+                        </Link>
                     </div>
 
-                    {/* ================= MOBILE / TABLET MENU BUTTON ================= */}
+                    {/* ================= MOBILE MENU BUTTON ================= */}
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className="flex h-10 w-10 items-center justify-center
-            rounded-xl text-gray-700 hover:bg-green-50
-            hover:text-green-700 lg:hidden"
+                        className="
+              lg:hidden
+              p-2
+              rounded-lg
+              text-gray-700
+              hover:bg-green-50
+              hover:text-green-600
+              transition
+            "
+                        aria-label="Toggle menu"
                     >
-                        {isOpen ? <X size={24} /> : <Menu size={24} />}
+                        {isOpen ? <X size={26} /> : <Menu size={26} />}
                     </button>
                 </div>
 
-                {/* ================= MOBILE + TABLET MENU ================= */}
-                {isOpen && (
-                    <div
-                        className="border-t border-green-100 py-4
-            lg:hidden"
-                    >
-                        <nav className="flex flex-col gap-1">
-                            {navLinks.map((link) => (
-                                <NavLink
-                                    key={link.path}
-                                    to={link.path}
-                                    onClick={() => setIsOpen(false)}
-                                    className={({ isActive }) =>
-                                        `rounded-xl px-4 py-3 text-sm font-medium
-                    transition sm:text-base
-                    ${
-                        isActive
-                            ? "bg-green-50 text-green-700"
-                            : "text-gray-700 hover:bg-green-50"
-                    }`
-                                    }
-                                >
-                                    {link.name}
-                                </NavLink>
-                            ))}
-                        </nav>
-
-                        {/* Mobile / Tablet Actions */}
-                        <div
-                            className="mt-4 flex gap-2 border-t
-              border-green-100 pt-4 sm:gap-3"
-                        >
-                            <button
-                                className="flex h-11 w-11 shrink-0 items-center
-                justify-center rounded-xl border border-green-100
-                text-gray-600 hover:bg-green-50
-                hover:text-green-700"
+                {/* ================= MOBILE MENU ================= */}
+                <div
+                    className={`
+            lg:hidden
+            overflow-hidden
+            transition-all duration-300 ease-in-out
+            ${isOpen ? "max-h-[500px] opacity-100 pb-5" : "max-h-0 opacity-0"}
+          `}
+                >
+                    <nav className="flex flex-col gap-1 pt-3 border-t border-green-100">
+                        {navLinks.map((link) => (
+                            <NavLink
+                                key={link.path}
+                                to={link.path}
+                                onClick={closeMenu}
+                                className={({ isActive }) =>
+                                    `
+                  px-4 py-3
+                  rounded-lg
+                  font-medium
+                  transition duration-300
+                  ${
+                      isActive
+                          ? "bg-green-50 text-green-600"
+                          : "text-gray-600 hover:bg-green-50 hover:text-green-600"
+                  }
+                  `
+                                }
                             >
-                                <Search size={19} />
-                            </button>
+                                {link.name}
+                            </NavLink>
+                        ))}
 
-                            {user ? (
-                                <Link
-                                    to="/dashboard"
-                                    onClick={() => setIsOpen(false)}
-                                    className="flex flex-1 items-center justify-center
-                  rounded-xl bg-green-700 py-3 text-sm
-                  font-semibold text-white sm:text-base"
-                                >
-                                    Dashboard
-                                </Link>
-                            ) : (
-                                <>
-                                    <Link
-                                        to="/login"
-                                        onClick={() => setIsOpen(false)}
-                                        className="flex flex-1 items-center justify-center
-                    rounded-xl border border-green-600 py-3
-                    text-sm font-semibold text-green-700
-                    sm:text-base"
-                                    >
-                                        Login
-                                    </Link>
-
-                                    <Link
-                                        to="/register"
-                                        onClick={() => setIsOpen(false)}
-                                        className="flex flex-1 items-center justify-center
-                    rounded-xl bg-green-700 py-3 text-sm
-                    font-semibold text-white sm:text-base"
-                                    >
-                                        Register
-                                    </Link>
-                                </>
-                            )}
+                        {/* Mobile Login */}
+                        <div className="flex justify-around items-center">
+                            <div className="avatar">
+                                <div className="w-10 rounded-full">
+                                    <img
+                                        alt="user img"
+                                        src={`${user ? user?.photoURL : <UserRound />}`}
+                                    />
+                                </div>
+                            </div>
+                            <Link
+                                to="/login"
+                                onClick={closeMenu}
+                                className="
+                mt-2
+                flex items-center justify-center gap-2
+                px-5 py-3
+                rounded-lg
+                bg-green-600
+                text-white
+                font-semibold
+                hover:bg-green-700
+                transition duration-300
+              "
+                            >
+                                <LogIn size={17} />
+                                Login
+                            </Link>
                         </div>
-                    </div>
-                )}
+                    </nav>
+                </div>
             </div>
         </header>
     );
